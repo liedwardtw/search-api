@@ -1,5 +1,7 @@
 # dsh-ego-google-search
 
+[繁體中文](README.zh-TW.md)
+
 Google web search for [DeepSeek Harness (DSH)](https://github.com/deepseek-ai/deepseek-harness),
 driven by your local [ego-browser (ego lite)](https://github.com/citrolabs/ego-lite).
 Each `web_search` call:
@@ -32,6 +34,11 @@ github:liedwardtw/search-api
 or ask your agent: “install the plugin bundle `github:liedwardtw/search-api`”.
 The full URL `https://github.com/liedwardtw/search-api` works too. Git must be
 installed and able to reach github.com.
+
+Nothing runs at install time: this bundle ships plain JavaScript with no
+dependencies and no install/build scripts, so no build authorization is
+needed. To pin exactly what you install, append a commit SHA:
+`github:liedwardtw/search-api#<commit-sha>`.
 
 **Option B — from a clone:**
 
