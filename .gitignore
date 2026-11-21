@@ -1,0 +1,10 @@
+# Dependencies and build output (this package has no runtime deps, keep it clean)
+node_modules/
+*.tgz
+
+# Local probes / verification artifacts — never publish machine-specific data
+verify/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db

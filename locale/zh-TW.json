@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "ego-browser Google 搜尋",
+    "description": "透過本機 ego-browser 開啟 Google 搜尋，返回自然搜尋結果後自動關閉分頁。安裝此 bundle 後會成為預設 web_search 搜尋服務，取代官方 DeepSeek 搜尋。需要已安裝 ego-browser（ego lite）；若 Google 彈出驗證碼，請在 ego-browser 中手動通過後重試。"
+  }
+}

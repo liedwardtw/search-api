@@ -1,0 +1,46 @@
+{
+  "name": "dsh-ego-google-search",
+  "version": "1.0.0",
+  "description": "Google web search through the local ego-browser, registered as the default DeepSeek Harness search provider.",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "web-search",
+    "google",
+    "ego-browser",
+    "browser-automation"
+  ],
+  "homepage": "https://github.com/liedwardtw/search-api#readme",
+  "bugs": {
+    "url": "https://github.com/liedwardtw/search-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liedwardtw/search-api.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "ego-task.mjs",
+    "cordis.patch.yml",
+    "locale",
+    "icon.svg",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

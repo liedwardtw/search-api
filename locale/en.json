@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Google search via ego-browser",
+    "description": "Searches Google in your local ego-browser, returns the organic results, and closes the tab automatically. Installing this bundle makes it the default web_search provider, replacing the official DeepSeek search. Requires ego-browser (ego lite) to be installed; if Google shows a CAPTCHA, pass the check in ego-browser manually and retry."
+  }
+}

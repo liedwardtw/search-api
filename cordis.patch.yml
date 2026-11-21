@@ -1,0 +1,13 @@
+# ego-browser Google search bundle for DeepSeek Harness (DSH).
+# 1) Register the ego-google search provider.
+- insert:
+    - id: web-search-ego-google
+      name: 'dsh-ego-google-search'
+      config: {}
+# 2) Make it the default search provider (config is replaced wholesale,
+#    so fetchProvider: http from the base layer is restated here).
+- id: web
+  name: '@deepseek-ai/dsh-web'
+  config:
+    searchProvider: ego-google
+    fetchProvider: http
