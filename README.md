@@ -50,11 +50,14 @@ Then **Plugins → Add plugin → local directory** and select the cloned folder
 (absolute path). A local-directory install links the checkout, so `git pull`
 updates the plugin in place (restart DSH to load new code).
 
-**Option C — npm (if published):**
+**Option C — npm:**
 
 ```
 dsh-ego-google-search
 ```
+
+Works once the package is published to npm (see
+[Publishing to npm](#publishing-to-npm) below).
 
 After installation the provider is live immediately (`application: applied`);
 the next `web_search` call already goes through Google. Verify in
@@ -130,6 +133,23 @@ search task spaces are left behind.
 - Snippet extraction follows Google's current SERP markup (`.VwiC3b` /
   `[data-sncf]`); a Google redesign may degrade snippets to titles + URLs.
 - Frequent automated queries may trigger Google's CAPTCHA (`GOOGLE_BLOCKED`).
+
+## Publishing to npm
+
+For maintainers. The package name `dsh-ego-google-search` is unscoped, so it
+publishes public by default.
+
+```sh
+npm login          # opens the browser to authenticate your npm account
+npm pack --dry-run # preview the exact tarball contents
+npm publish --access public
+```
+
+If your npm account enforces 2FA for publishing, npm prompts for a one-time
+code (or use a granular access token with publish permission). To ship an
+update: bump `version` in `package.json`, commit, then `npm publish` again.
+After publishing, anyone can install with just `dsh-ego-google-search` in
+**Plugins → Add plugin**.
 
 ## License
 

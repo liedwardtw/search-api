@@ -44,6 +44,14 @@ git clone https://github.com/liedwardtw/search-api.git
 然後 **Plugins → Add plugin → 本機目錄**，選 clone 下來的資料夾（絕對路徑）。
 本機目錄安裝採連結方式，之後 `git pull` 即可更新（重啟 DSH 載入新程式碼）。
 
+**方法 C — npm：**
+
+```
+dsh-ego-google-search
+```
+
+套件發佈到 npm 後即可用（見英文 README 的「Publishing to npm」）。
+
 安裝完成立即生效（`application: applied`），下一次 `web_search` 就走 Google。
 到 **Settings → Web search** 確認顯示 **Google (ego-browser)**。
 
