@@ -19,23 +19,21 @@ DeepSeek 搜尋。官方服務仍保留，隨時可在 **Settings → Web search
 ## 安裝
 
 需要：DeepSeek Harness（有 Plugin Manager／**Plugins** 頁面）、本機已安裝
-ego-browser（ego lite）、已安裝 Git 且能連上 github.com。
+ego-browser（ego lite）。從 GitHub 安裝時另需 Git。
 
-**方法 A — 直接從 GitHub 安裝（推薦）：** 在 DSH 開
-**Plugins → Add plugin**，貼上：
+**方法 A — npm（推薦）：** 在 DSH 開 **Plugins → Add plugin**，貼上：
 
 ```
-github:liedwardtw/search-api
+dsh-ego-google-search
 ```
 
-或直接叫你的 agent：「安裝插件 bundle `github:liedwardtw/search-api`」。
-完整網址 `https://github.com/liedwardtw/search-api` 也可以。
+或直接叫你的 agent：「安裝插件 bundle `dsh-ego-google-search`」。
 
-安裝時不會執行任何腳本：本 bundle 是純 JavaScript、零依賴、無安裝／建置腳本，
-不需要任何建置授權。想鎖定安裝內容，可加上 commit SHA：
-`github:liedwardtw/search-api#<commit-sha>`。
+**方法 B — 從 GitHub 安裝：** 改貼 `github:liedwardtw/search-api`
+（完整網址 `https://github.com/liedwardtw/search-api` 也可以）。
+想鎖定版本可加 commit SHA：`github:liedwardtw/search-api#<commit-sha>`。
 
-**方法 B — clone 後以本機目錄安裝：**
+**方法 C — clone 後以本機目錄安裝：**
 
 ```sh
 git clone https://github.com/liedwardtw/search-api.git
@@ -44,26 +42,15 @@ git clone https://github.com/liedwardtw/search-api.git
 然後 **Plugins → Add plugin → 本機目錄**，選 clone 下來的資料夾（絕對路徑）。
 本機目錄安裝採連結方式，之後 `git pull` 即可更新（重啟 DSH 載入新程式碼）。
 
-**方法 C — npm：**
-
-```
-dsh-ego-google-search
-```
-
-套件發佈到 npm 後即可用（見英文 README 的「Publishing to npm」）。
-
-安裝完成立即生效（`application: applied`），下一次 `web_search` 就走 Google。
+安裝時不會執行任何腳本：本 bundle 是純 JavaScript、零依賴、無安裝／建置腳本，
+不需要任何建置授權。安裝完成立即生效，下一次 `web_search` 就走 Google；
 到 **Settings → Web search** 確認顯示 **Google (ego-browser)**。
 
-## 需求與限制
+## 需求
 
 - ego-browser 執行檔尋找順序：設定的 `egoPath` → `$EGO_BROWSER_PATH` →
   `~/.local/share/ego/active_version_dir/ego-browser.exe` → `PATH`。
-- Google 若彈出驗證碼／異常流量頁，搜尋會回報 `GOOGLE_BLOCKED`：
-  請開 ego-browser 手動通過驗證後重試。
-- 只返回自然搜尋連結，沒有官方服務的 AI 摘要回答。
-- 每次查詢開一個瀏覽器任務，比 API 搜尋慢；摘要擷取依賴 Google 目前的
-  SERP 結構（`.VwiC3b`／`[data-sncf]`），改版時可能退化為只剩標題＋網址。
+- 能連上 Google 的網路。
 
 ## 設定（預設值即可用）
 
@@ -84,8 +71,8 @@ dsh-ego-google-search
 | `egoPath` | 自動偵測 | ego-browser 執行檔絕對路徑 |
 | `concurrency` | `2` | 瀏覽器搜尋並行上限（多查詢工具呼叫會排隊） |
 | `timeoutMs` | `45000` | 單次搜尋預算，低於工具層 60 秒上限 |
-| `hl` | `zh-TW` | Google 介面語言 |
-| `googleDomain` | `www.google.com` | 要查詢的 Google 網域 |
+| `hl` | `zh-TW` | Google 介面語言（`en`、`ja`…） |
+| `googleDomain` | `www.google.com` | 要查詢的 Google 網域（如 `www.google.co.jp`） |
 
 ## 切回官方搜尋
 
@@ -93,15 +80,22 @@ dsh-ego-google-search
 - **永久：** 在 **Plugins** 移除此 bundle（`web` 行覆蓋隨之消失），或在
   profile 的 `cordis.patch.yml` 覆蓋 `web` 行：`searchProvider: deepseek-search-api`。
 
-## 測試
+## 疑難排解
 
-已安裝 ego-browser 時：
+| 錯誤 | 意義／解法 |
+| --- | --- |
+| `EGO_NOT_FOUND` | 找不到 ego-browser 執行檔。安裝 ego lite，或把 `egoPath` 設為其絕對路徑。 |
+| `GOOGLE_BLOCKED` | Google 彈出驗證碼／異常流量頁。開 ego-browser 手動通過驗證後重試。 |
+| `EGO_SEARCH_TIMEOUT` | 搜尋超過 `timeoutMs`。調高預算或檢查網路。 |
+| `EGO_TASK_FAILED` | 瀏覽器任務失敗；錯誤訊息會附上最後幾行輸出。 |
 
-```sh
-node test/test-provider.mjs
-```
+## 限制
 
-以 mock context 註冊 provider 並跑一次真實 Google 搜尋。
+- 只返回自然搜尋連結，沒有官方服務的 AI 摘要回答。
+- 每次查詢開一個瀏覽器任務，比 API 搜尋慢（通常數秒）。
+- 摘要擷取依賴 Google 目前的 SERP 結構（`.VwiC3b`／`[data-sncf]`），
+  改版時可能退化為只剩標題＋網址。
+- 頻繁自動化查詢可能觸發 Google 驗證碼。
 
 ## 授權
 
